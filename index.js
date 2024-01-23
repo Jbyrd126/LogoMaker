@@ -16,7 +16,7 @@ const questions = [
     },
     {
         type: "input",
-        name: "text-color",
+        name: "textColor",
         message: "Text-Color: Enter a color keyword (OR a hexadecimal number)",
         validate: function (input) {
             if (input.trim() === "") {
@@ -27,7 +27,7 @@ const questions = [
     },
     {
         type: "input",
-        name: "shape-color",
+        name: "shapeColor",
         message: "Shape-Color: Enter a color keyword (OR a hexadecimal number)",
     },
     {
