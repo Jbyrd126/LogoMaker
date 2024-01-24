@@ -1,7 +1,25 @@
 const inquirer = require("inquirer");
 const fs = require("fs");
 const { Shape, Circle, Square, Triangle } = require("./lib/shapes");
-const { Svg } = require("./lib/svg")
+//const { Svg } = require("./lib/svg");
+
+class Svg {
+    constructor() {
+        this.textElement = "";
+        this.shapeElement = "";
+    }
+    render() {
+        return `<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="300" height="200">${this.shapeElement}${this.textElement}</svg>`;
+    }
+    setTextElement(text, color) {
+        this.textElement = `<text x="150" y="125" font-size="60" text-anchor="middle" fill="${color}">${text}</text>`
+    }
+    setShapeElement(shape) {
+        this.shapeElement = shape.render()
+    }
+}
+
+module.export = { Svg }
 
 const questions = [
     {
@@ -64,36 +82,48 @@ async function init() {
     var flynnText = "";
 
     if (answers.text.length > 0 && answers.text.length < 4) {
-
         flynnText = answers.text;
-
-    }
-    else {
+    } else {
         console.log("You didnt enter the correct number of characters!");
 
         return;
     }
 
+    //user font color
+    flynnTextColor = answers.textColor;
+
+    //user shape color
+    flynnShapeColor = answers.shapeColor;
+
+    //user shape type
+    flynnShapeType = answers["shape"];
+
     let flynnShape;
 
-    if (flynnShape === "Square") {
+    if (flynnShapeType === "Square") {
         flynnShape = new Square();
-    }
-    else if (flynnShape === "Trinagle") {
+        console.log("Flynn has selected Square!");
+    } else if (flynnShapeType === "Triangle") {
         flynnShape = new Triangle();
-    }
-    else if (flynnShape === "Circle") {
+        console.log("Flynn has selected Triangle!");
+    } else if (flynnShapeType === "Circle") {
         flynnShape = new Circle();
+        console.log("Flynn has selected Circle!");
+    } else {
+        console.log("must pick a shape");
     }
-    else {
-        console.log('must pick a shape')
-    }
-    flynnShape.setColor
+    flynnShape.setColor(flynnShapeColor);
+
+    var svg = new Svg();
+
+    svg.setTextElement(flynnText, flynnTextColor);
+    svg.setShapeElement(flynnShape);
+    svgString = svg.render();
 
 
 
 
-    // writeToFile("./examples", answers);
+    writeToFile("./output/flynn.svg", svgString);
 }
 
 init();
