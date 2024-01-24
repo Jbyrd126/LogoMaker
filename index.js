@@ -1,26 +1,30 @@
 const inquirer = require("inquirer");
 const fs = require("fs");
-const { Shape, Circle, Square, Triangle } = require("./lib/shapes");
+const { Circle, Square, Triangle } = require("./lib/shapes");
 //const { Svg } = require("./lib/svg");
 
+
+// module.export = { Svg }
 class Svg {
     constructor() {
         this.textElement = "";
         this.shapeElement = "";
     }
+
     render() {
         return `<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="300" height="200">${this.shapeElement}${this.textElement}</svg>`;
     }
+
     setTextElement(text, color) {
-        this.textElement = `<text x="150" y="125" font-size="60" text-anchor="middle" fill="${color}">${text}</text>`
+        this.textElement = `<text x="150" y="125" font-size="60" text-anchor="middle" fill="${color}">${text}</text>`;
     }
+
     setShapeElement(shape) {
-        this.shapeElement = shape.render()
+        this.shapeElement = shape.render();
     }
 }
 
-module.export = { Svg }
-
+//Questions array
 const questions = [
     {
         type: "input",
@@ -61,7 +65,7 @@ const questions = [
 ];
 //write the data to the file
 function writeToFile(fileName, data) {
-    fs.writeFile(fileName, data, (err) => {
+    fs.writeFile(fileName, data, 'utf8', (err) => {
         if (err) {
             return console.log(err);
         }
@@ -69,12 +73,12 @@ function writeToFile(fileName, data) {
     });
 }
 
-// TODO: Create a function to initialize app
+//  function to initialize app
 async function init() {
-    console.log("And away we go!");
+    console.log("We fight for the user!");
 
     var svgString = "";
-    var svg_file = "logo.svg";
+    var svg_file = "flynn.svg";
 
     // prompt user for answers
     const answers = await inquirer.prompt(questions);
@@ -90,13 +94,13 @@ async function init() {
     }
 
     //user font color
-    flynnTextColor = answers.textColor;
+    let flynnTextColor = answers["textColor"];
 
     //user shape color
-    flynnShapeColor = answers.shapeColor;
+    let flynnShapeColor = answers.shapeColor;
 
     //user shape type
-    flynnShapeType = answers["shape"];
+    let flynnShapeType = answers["shape"];
 
     let flynnShape;
 
@@ -110,7 +114,7 @@ async function init() {
         flynnShape = new Circle();
         console.log("Flynn has selected Circle!");
     } else {
-        console.log("must pick a shape");
+        console.log("You must pick a shape");
     }
     flynnShape.setColor(flynnShapeColor);
 
@@ -122,7 +126,7 @@ async function init() {
 
 
 
-
+    console.log(svgString);
     writeToFile("./output/flynn.svg", svgString);
 }
 
