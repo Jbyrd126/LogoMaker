@@ -1,10 +1,8 @@
 const inquirer = require("inquirer");
 const fs = require("fs");
 const { Circle, Square, Triangle } = require("./lib/shapes");
-//const { Svg } = require("./lib/svg");
 
 
-// module.export = { Svg }
 class Svg {
     constructor() {
         this.textElement = "";
@@ -69,7 +67,7 @@ function writeToFile(fileName, data) {
         if (err) {
             return console.log(err);
         }
-        console.log("Shes a beaut!");
+        console.log("Power to the user!");
     });
 }
 
